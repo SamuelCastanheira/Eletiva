@@ -17,16 +17,6 @@ int * patrimonioMembro;
 bool * Percorrido;
 int n;
 
-int max (int v[]){
-  int maxi=-101;
-  for (int i=1;i<n+1;i++){
-    maxi = maxi > v[i]? maxi: v[i];
-  }
-  return maxi;
-}
-
-
-
 int Patrimonio(int id){
   
   if (id == 0){
@@ -40,7 +30,6 @@ int Patrimonio(int id){
    int patrimonioEsquerda = Patrimonio(arvore[id].e);
    int patrimonio = arvore[id].v + patrimonioEsquerda + patrimonioDireita;
    patrimonioMembro[id]=patrimonio;
-   //cout <<id << " "<< maiorPatrimonio <<" "<< patrimonio<< endl;
    if (patrimonio > maiorPatrimonio){
       membroMaisRico = id;
       maiorPatrimonio = patrimonio;
@@ -71,23 +60,15 @@ void Funcao(){
     patrimonioMembro[id]=-101;
     Percorrido[id]=false;
     i++;
-    //arvore[i].imprime();
   }
   
   for (int i=1;i<n+1;i++){
-    //cout <<endl <<i<<endl;
     if (!Percorrido[i]){
  
     Patrimonio(i);
     }
   }
-  
-  
-  //cout <<endl;
   cout <<membroMaisRico<<endl;
-  //cout <<endl;
-  //cout <<maiorPatrimonio<<endl;
-  //cout <<endl;
 }
 
  
