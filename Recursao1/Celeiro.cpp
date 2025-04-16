@@ -62,35 +62,44 @@ int max (int a, int b, int c, int d){
 int L,A,qtd;
 Arvore * arvores;
 
+bool DentroDoRetangulo(int n, LadoX ladox,LadoY ladoy){
+  bool ComparaX= (arvores[n].x >= ladox.x0 && arvores[n].x <=ladox.x1);
+  bool ComparaY = (arvores[n].y >= ladoy.y0 && arvores[n].y <=ladoy.y1);
+  return ComparaX && ComparaY;  
+}
+
+
 long long int Area(Ponto p0, Ponto p1, int n){
+  //arvores[n].imprime();
   LadoX ladox(p0.x, p1.x);
   LadoY ladoy(p0.y, p1.y);
   if (n==0){
     return ladox.tamanho()*ladoy.tamanho();
   }
   
-  if ((arvores[n].x > ladox.x0 && arvores[n].x <ladox.x1) &&  (arvores[n].y > ladoy.y0 && arvores[n].y <ladoy.y1)){
+  if (DentroDoRetangulo(n,ladox,ladoy)){
     
-  cout <<"oi" <<endl;
+  
   Arvore arvore = arvores[n];
-  Ponto cima_p0(p0.x,arvores[n].y+1);
+  Ponto cima_p0(p0.x,arvores[n].y);
   Ponto cima_p1(p1.x,p1.y);
   Ponto baixo_p0(p0.x,p0.y);
-  Ponto baixo_p1(p1.x-1,arvores[n].y-1);
+  Ponto baixo_p1(p1.x,arvores[n].y);
   Ponto esquerda_p0(p0.x,p0.y);
-  Ponto esquerda_p1(arvores[n].x-1,p1.y);
-  Ponto direita_p0(arvores[n].x+1,p0.y);
+  Ponto esquerda_p1(arvores[n].x,p1.y);
+  Ponto direita_p0(arvores[n].x,p0.y);
   Ponto direita_p1(p1.x,p1.y);
   
-  int AreaCima = Area(cima_p0,cima_p1, n);
-  int AreaBaixo = Area(baixo_p0,baixo_p1, n);
-  int AreaEsquerda = Area(esquerda_p0,esquerda_p1, n);
-  int AreaDireita = Area(direita_p0,direita_p1, n);
+  int AreaCima = Area(cima_p0,cima_p1, n-1);
+  int AreaBaixo = Area(baixo_p0,baixo_p1, n-1);
+  int AreaEsquerda = Area(esquerda_p0,esquerda_p1, n-1);
+  int AreaDireita = Area(direita_p0,direita_p1, n-1);
   
   int MaiorArea = max(AreaCima,AreaBaixo,AreaDireita,AreaDireita);
+  return MaiorArea;
   }
   else {
-    cout <<"oi2" <<endl;
+    //cout <<"oi2" <<endl;
    return Area(p0,p1,n-1);
   }
 }
@@ -101,7 +110,7 @@ void Funcao (){
   cin >> qtd;
 	arvores = (Arvore*)(malloc((qtd+1)*sizeof(Arvore)));
 
-	for (int i=1;i<qtd;i++){
+	for (int i=1;i<=qtd;i++){
 			cin >> arvores[i].x;
 			cin >> arvores[i].y;
 			//arvores[i].imprime();
