@@ -6,7 +6,7 @@ long long int Combinacao(int n, int p){
   if (p==0||(n-p)==0){
     return 1;
   }
-  return Combinacao(n-1,p-1)*(n)/p;
+  return Combinacao(n-1,p-1)*((n)/p);
 }
 
 void Funcao(){
